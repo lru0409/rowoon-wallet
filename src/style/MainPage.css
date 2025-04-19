@@ -1,0 +1,39 @@
+.main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-page__content {
+  width: 1024px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.main-page__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main-page__section-label {
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.main-page__section-content {
+  display: flex;
+  gap: 16px;
+}
+
+.main-page__section-content--balance {
+  flex-direction: row;
+}
+
+.main-page__section-content--wallet {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

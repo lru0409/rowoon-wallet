@@ -1,0 +1,36 @@
+.import-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.import-page__content {
+  width: 1024px;
+}
+
+.import-page__field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.import-page__field-label {
+  font-size: 22px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.import-page__field-textarea {
+  height: 180px;
+  border-radius: 20px;
+  border: 2px solid black;
+  padding: 20px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.import-page__button {
+  width: 100%;
+}

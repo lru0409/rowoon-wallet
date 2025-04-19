@@ -1,0 +1,41 @@
+.info-panel {
+  flex: 1;
+  position: relative;
+}
+
+.info-panel__label {
+  font-size: 18px;
+  position: absolute;
+  top: 15px;
+  left: 20px;
+}
+
+.info-panel__info {
+  height: 130px;
+  border-radius: 20px;
+  border: 2px solid black;
+  padding: 50px;
+  box-sizing: border-box;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.info-panel__info--centered {
+  justify-content: center;
+}
+
+.info-panel__info--large {
+  font-size: 40px;
+}
+
+.info-panel__toggle-visibility-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 45px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
