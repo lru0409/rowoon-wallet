@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "../style/StartPage.css";
 import "../style/common.css";
 import useWalletContext from "../contexts/WalletContext";
-
-import { getDefaultProvider, Wallet } from "ethers";
+import { Wallet } from "ethers";
 
 const StartPage = () => {
   const navigate = useNavigate();
-  const { setWalletInfo } = useWalletContext();
-  const provider = useMemo(() => getDefaultProvider("sepolia"), []);
+  const { provider, setWalletInfo } = useWalletContext();
 
+  // 지갑 생성 & 생성된 지갑 정보 저장
   const createWallet = useCallback(() => {
     const wallet = Wallet.createRandom(provider);
     setWalletInfo({
