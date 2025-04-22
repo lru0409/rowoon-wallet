@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { Wallet } from "ethers";
 import "../style/StartPage.css";
 import "../style/common.css";
 import useWalletContext from "../contexts/WalletContext";
-import { Wallet } from "ethers";
 
 const StartPage = () => {
   const navigate = useNavigate();
