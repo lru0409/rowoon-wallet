@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import InfoPanel from "../components/InfoPanel";
 import "../style/MainPage.css";
@@ -8,6 +9,7 @@ import GCRE_ABI from "../abi/GCRE_ABI.json";
 import { GCRE_CONTRACT_ADDRESS } from "../constants/constants";
 
 const MainPage = () => {
+  const navigate = useNavigate();
   const {
     provider,
     walletInfo,
@@ -49,7 +51,10 @@ const MainPage = () => {
   );
 
   useEffect(() => {
-    if (!walletInfo.address) return;
+    if (!walletInfo.address) {
+      navigate("/");
+      return;
+    }
     fetchBalance(walletInfo.address);
   }, [walletInfo]);
 
