@@ -38,7 +38,7 @@ const InfoPanel: React.FC<InfoPanelProps> = (props) => {
   return (
     <div className="info-panel">
       <label className="info-panel__label">{label}</label>
-      <div className={infoClassName}>{(visible && info) ?? "알 수 없음"}</div>
+      <div className={infoClassName}>{(visible && info) ?? "-"}</div>
       {visibilityToggleable && (
         <button
           className="info-panel__toggle-visibility-button"

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavigationBar";
 import InfoPanel from "../components/InfoPanel";
@@ -6,19 +6,14 @@ import "../style/MainPage.css";
 import useWalletContext from "../contexts/WalletContext";
 import { ethers, Contract } from "ethers";
 import GCRE_ABI from "../abi/GCRE_ABI.json";
-import { GCRE_CONTRACT_ADDRESS } from "../constants/constants";
+import { GCRE_CONTRACT_ADDRESS, TokenType } from "../constants/constants";
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const {
-    provider,
-    walletInfo,
-    balanceInfo,
-    setBalanceInfo,
-    isBalanceLoading,
-    setIsBalanceLoading,
-    TOKEN_SYMBOLS,
-  } = useWalletContext();
+  const { provider, walletInfo, balanceInfo, setBalanceInfo, TOKEN_SYMBOLS } =
+    useWalletContext();
+  const [isBalanceLoading, setIsBalanceLoading] = useState<boolean>(false);
+  const [isBalanceError, setIsBalanceError] = useState<boolean>(false);
 
   const fetchBalance = useCallback(
     async (address: string) => {
@@ -40,10 +35,7 @@ const MainPage = () => {
         });
       } catch (err) {
         console.error("Error getting balance", err);
-        setBalanceInfo({
-          ethereum: "Error",
-          gcre: "Error",
-        });
+        setIsBalanceError(true);
       }
       setIsBalanceLoading(false);
     },
@@ -58,6 +50,24 @@ const MainPage = () => {
     fetchBalance(walletInfo.address);
   }, [walletInfo]);
 
+  const getBalanceDisplayText = useCallback(
+    (tokenType: TokenType) => {
+      if (isBalanceLoading) return "Loading...";
+      if (isBalanceError) return "Error";
+      if (!balanceInfo[tokenType]) return null;
+      return `${balanceInfo[tokenType]} ${TOKEN_SYMBOLS[tokenType]}`;
+    },
+    [isBalanceLoading, isBalanceError, balanceInfo]
+  );
+  const ethereumBalanceInfo = useMemo(
+    () => getBalanceDisplayText(TokenType.Ethereum),
+    [getBalanceDisplayText]
+  );
+  const gcreBalanceInfo = useMemo(
+    () => getBalanceDisplayText(TokenType.GCRE),
+    [getBalanceDisplayText]
+  );
+
   return (
     <div className="main-page">
       <NavigationBar />
@@ -67,25 +77,13 @@ const MainPage = () => {
           <div className="main-page__section-content main-page__section-content--balance">
             <InfoPanel
               label="Ethereum"
-              info={
-                isBalanceLoading
-                  ? "Loading..."
-                  : balanceInfo.ethereum
-                  ? balanceInfo.ethereum + " " + TOKEN_SYMBOLS.ethereum
-                  : null
-              }
+              info={ethereumBalanceInfo}
               isCentered={true}
               isLarge={true}
             />
             <InfoPanel
               label="G-CRE"
-              info={
-                isBalanceLoading
-                  ? "Loading..."
-                  : balanceInfo.gcre
-                  ? balanceInfo.gcre + " " + TOKEN_SYMBOLS.gcre
-                  : null
-              }
+              info={gcreBalanceInfo}
               isCentered={true}
               isLarge={true}
             />

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Wallet } from "ethers";
 import "../style/StartPage.css";

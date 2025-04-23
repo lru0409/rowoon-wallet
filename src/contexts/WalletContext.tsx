@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useMemo,
-  ReactNode,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import { Provider, JsonRpcProvider } from "ethers";
 
 interface WalletInfo {
@@ -31,23 +24,17 @@ interface WalletContextType {
   setWalletInfo: React.Dispatch<React.SetStateAction<WalletInfo>>;
   balanceInfo: BalanceInfo;
   setBalanceInfo: React.Dispatch<React.SetStateAction<BalanceInfo>>;
-  isBalanceLoading: boolean;
-  setIsBalanceLoading: React.Dispatch<React.SetStateAction<boolean>>;
   TOKEN_SYMBOLS: TokenSymbols;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
+const provider = new JsonRpcProvider(
+  "https://eth-sepolia.g.alchemy.com/v2/VINrITPd341SRj_K90tO8_HjeCxAeUxj"
+); // sepolia 테스트넷에 연결되는 Provider 생성
 
 export const WalletProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const provider = useMemo(
-    () =>
-      new JsonRpcProvider(
-        "https://eth-sepolia.g.alchemy.com/v2/VINrITPd341SRj_K90tO8_HjeCxAeUxj"
-      ),
-    []
-  ); // sepolia 테스트넷에 연결되는 Provider 생성
   const TOKEN_SYMBOLS: TokenSymbols = { ethereum: "ETH", gcre: "G-CRE" };
 
   const [walletInfo, setWalletInfo] = useState<WalletInfo>({
@@ -60,7 +47,6 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
     ethereum: null,
     gcre: null,
   });
-  const [isBalanceLoading, setIsBalanceLoading] = useState<boolean>(false);
 
   return (
     <WalletContext.Provider
@@ -70,8 +56,6 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({
         setWalletInfo,
         balanceInfo,
         setBalanceInfo,
-        isBalanceLoading,
-        setIsBalanceLoading,
         TOKEN_SYMBOLS,
       }}
     >
