@@ -1,37 +1,22 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ethers, Mnemonic } from "ethers";
 import NavigationBar from "../components/NavigationBar";
+import * as WalletStore from "../store/wallet.store";
 import "../style/common.css";
 import "../style/ImportPage.css";
-import useWalletContext from "../contexts/WalletContext";
 
 const ImportPage = () => {
   const navigate = useNavigate();
   const [mnemonicInput, setMnemonicInput] = useState("");
-  const { setWalletInfo } = useWalletContext();
 
-  const restoreWallet = useCallback(() => {
+  const onRestoreButtonClick = useCallback(() => {
     try {
-      const mnemonic = Mnemonic.fromPhrase(
-        mnemonicInput.trim().toLowerCase().replace(/\s+/g, " ")
-      );
-      const wallet = ethers.HDNodeWallet.fromMnemonic(mnemonic);
-      setWalletInfo({
-        address: wallet.address,
-        publicKey: wallet.publicKey,
-        privateKey: wallet.privateKey,
-        mnemonic: wallet.mnemonic?.phrase ?? null,
-      });
+      WalletStore.restoreWallet(mnemonicInput);
     } catch (err) {
       console.log("Error restore wallet", err);
     }
-  }, [mnemonicInput, setWalletInfo]);
-
-  const onRestoreButtonClick = () => {
-    restoreWallet();
     navigate("/main");
-  };
+  }, [mnemonicInput, navigate]);
 
   return (
     <div className="import-page">

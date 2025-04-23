@@ -5,3 +5,8 @@ export enum TokenType {
   Ethereum = "ethereum",
   GCRE = "gcre",
 }
+
+export enum TokenSymbol {
+  ethereum = "ETH",
+  gcre = "G-CRE",
+}
